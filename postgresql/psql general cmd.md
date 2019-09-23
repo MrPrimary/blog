@@ -91,87 +91,87 @@
 ####  \endif                 end conditional block
 
 ####  资讯性
-####	(选项: S = 显示系统对象, += 其余的详细信息)
-####	\d[S + ]          列出表, 视图和序列
-####	\d[S + ]  名称      描述表，视图，序列，或索引
-####	\da[S][模式]    列出聚合函数
-####	\dA[+][PATTERN]      list access methods
-####	\db[+][模式]     列出表空间
-####	\dc[S + ][PATTERN]      列表转换
-####	\dC[+][PATTERN]      列出类型强制转换
-####	\dd[S][PATTERN]      显示没有在别处显示的对象描述
-####	\dD[S + ][PATTERN]      列出共同值域
-####	\ddp[模式]    列出默认权限
-####	\dE[S + ][PATTERN]      列出引用表
-####	\det[+][PATTERN]      列出引用表
-####	\des[+][模式]    列出外部服务器
-####	\deu[+][模式]     列出用户映射
-####	\dew[+][模式]       列出外部数据封装器
-####	\df[antw][S + ][模式]    列出[只包括 聚合 / 常规 / 触发器 / 窗口]函数
-####	\dF[+][模式]   列出文本搜索配置
-####	\dFd[+][模式]     列出文本搜索字典
-####	\dFp[+][模式]     列出文本搜索解析器
-####	\dFt[+][模式]   列出文本搜索模版
-####	\dg[S + ][PATTERN]      列出角色
-####	\di[S + ][模式]  列出索引
-####	\dl                   列出大对象， 功能与\lo_list相同
-####	\dL[S + ][PATTERN]      列出所有过程语言
-####	\dm[S + ][PATTERN]      列出所有物化视图
-####	\dn[S + ][PATTERN]     列出所有模式
-####	\do[S][模式]   列出运算符
-####	\dO[S + ][PATTERN]      列出所有校对规则
-####	\dp[模式]     列出表，视图和序列的访问权限
-####	\drds[模式1[模式2]] 列出每个数据库的角色设置
-####	\dRp[+][PATTERN]      list replication publications
-####	\dRs[+][PATTERN]      list replication subscriptions
-####	\ds[S + ][模式]    列出序列
-####	\dt[S + ][模式]     列出表
-####	\dT[S + ][模式]  列出数据类型
-####	\du[S + ][PATTERN]      列出角色
-####	\dv[S + ][模式]   列出视图
-####	\dx[+][PATTERN]      列出扩展
-####	\dy[PATTERN]      列出所有事件触发器
-####	\l[+][PATTERN]      列出所有数据库
-####	\sf[+]  FUNCNAME       显示一个函数的定义
-####	\sv[+]  VIEWNAME       显示一个视图的定义
-####	\z[模式]    和\dp的功能相同
-	
-####	格式化
-####	\a                  在非对齐模式和对齐模式之间切换
-####	\C[字符串]        设置表的标题，或如果没有的标题就取消
-####	\f[字符串]         显示或设定非对齐模式查询输出的字段分隔符
-####	\H                    切换HTML输出模式(目前是 关闭)
-####	\pset[NAME[VALUE]]   set table output option
-####	(NAME : = { border | columns | expanded | fieldsep | fieldsep_zero |
-####	footer | format | linestyle | null | numericlocale | pager |
-####	pager_min_lines | recordsep | recordsep_zero | tableattr | title |
-####	tuples_only | unicode_border_linestyle |
-####	unicode_column_linestyle | unicode_header_linestyle })
-####	\t[开 | 关]       只显示记录(目前是 关闭)
-####	\T[字符串]         设置HTML <表格>标签属性, 或者如果没有的话取消设置
-####	\x[on | off | auto]       切换扩展输出模式(目前是 关闭)
-	
-####	连接
-####	\c[onnect]{ [DBNAME | -USER | -HOST | -PORT | -] | conninfo }
-####	连接到新数据库（当前是"postgres"）
-####	\conninfo              显示当前连接的相关信息
-####	\encoding[编码名称] 显示或设定客户端编码
-####	\password[USERNAME]  安全地为用户更改口令
-	
-####	操作系统
-####	\cd[目录]     更改目前的工作目录
-####	\setenv NAME[VALUE]   设置或清空环境变量
-####	\timing[开 | 关]       切换命令计时开关(目前是 关闭)
-####	\![命令]      在 shell中执行命令或启动一个交互式shell
-	
-####	变量
-####	\prompt[文本] 名称 提示用户设定内部变量
-####	\set[名称[值数]] 设定内部变量，若无参数则列出全部变量
-####	\unset 名称    清空(删除)内部变量
-	
-####	大对象
-####	\lo_export LOBOID 文件
-####	\lo_import 文件[注释]
-####	\lo_list
-####	\lo_unlink LOBOID   大对象运算
+####  (选项: S = 显示系统对象, += 其余的详细信息)
+####  \d[S + ]          列出表, 视图和序列
+####  \d[S + ]  名称      描述表，视图，序列，或索引
+####  \da[S][模式]    列出聚合函数
+####  \dA[+][PATTERN]      list access methods
+####  \db[+][模式]     列出表空间
+####  \dc[S + ][PATTERN]      列表转换
+####  \dC[+][PATTERN]      列出类型强制转换
+####  \dd[S][PATTERN]      显示没有在别处显示的对象描述
+####  \dD[S + ][PATTERN]      列出共同值域
+####  \ddp[模式]    列出默认权限
+####  \dE[S + ][PATTERN]      列出引用表
+####  \det[+][PATTERN]      列出引用表
+####  \des[+][模式]    列出外部服务器
+####  \deu[+][模式]     列出用户映射
+####  \dew[+][模式]       列出外部数据封装器
+####  \df[antw][S + ][模式]    列出[只包括 聚合 / 常规 / 触发器 / 窗口]函数
+####  \dF[+][模式]   列出文本搜索配置
+####  \dFd[+][模式]     列出文本搜索字典
+####  \dFp[+][模式]     列出文本搜索解析器
+####  \dFt[+][模式]   列出文本搜索模版
+####  \dg[S + ][PATTERN]      列出角色
+####  \di[S + ][模式]  列出索引
+####  \dl                   列出大对象， 功能与\lo_list相同
+####  \dL[S + ][PATTERN]      列出所有过程语言
+####  \dm[S + ][PATTERN]      列出所有物化视图
+####  \dn[S + ][PATTERN]     列出所有模式
+####  \do[S][模式]   列出运算符
+####  \dO[S + ][PATTERN]      列出所有校对规则
+####  \dp[模式]     列出表，视图和序列的访问权限
+####  \drds[模式1[模式2]] 列出每个数据库的角色设置
+####  \dRp[+][PATTERN]      list replication publications
+####  \dRs[+][PATTERN]      list replication subscriptions
+####  \ds[S + ][模式]    列出序列
+####  \dt[S + ][模式]     列出表
+####  \dT[S + ][模式]  列出数据类型
+####  \du[S + ][PATTERN]      列出角色
+####  \dv[S + ][模式]   列出视图
+####  \dx[+][PATTERN]      列出扩展
+####  \dy[PATTERN]      列出所有事件触发器
+####  \l[+][PATTERN]      列出所有数据库
+####  \sf[+]  FUNCNAME       显示一个函数的定义
+####  \sv[+]  VIEWNAME       显示一个视图的定义
+####  \z[模式]    和\dp的功能相同
+	  
+####  格式化
+####  \a                  在非对齐模式和对齐模式之间切换
+####  \C[字符串]        设置表的标题，或如果没有的标题就取消
+####  \f[字符串]         显示或设定非对齐模式查询输出的字段分隔符
+####  \H                    切换HTML输出模式(目前是 关闭)
+####  \pset[NAME[VALUE]]   set table output option
+####  (NAME : = { border | columns | expanded | fieldsep | fieldsep_zero |
+####  footer | format | linestyle | null | numericlocale | pager |
+####  pager_min_lines | recordsep | recordsep_zero | tableattr | title |
+####  tuples_only | unicode_border_linestyle |
+####  unicode_column_linestyle | unicode_header_linestyle })
+####  \t[开 | 关]       只显示记录(目前是 关闭)
+####  \T[字符串]         设置HTML <表格>标签属性, 或者如果没有的话取消设置
+####  \x[on | off | auto]       切换扩展输出模式(目前是 关闭)
+	  
+####  连接
+####  \c[onnect]{ [DBNAME | -USER | -HOST | -PORT | -] | conninfo }
+####  连接到新数据库（当前是"postgres"）
+####  \conninfo              显示当前连接的相关信息
+####  \encoding[编码名称] 显示或设定客户端编码
+####  \password[USERNAME]  安全地为用户更改口令
+	  
+####  操作系统
+####  \cd[目录]     更改目前的工作目录
+####  \setenv NAME[VALUE]   设置或清空环境变量
+####  \timing[开 | 关]       切换命令计时开关(目前是 关闭)
+####  \![命令]      在 shell中执行命令或启动一个交互式shell
+	  
+####  变量
+####  \prompt[文本] 名称 提示用户设定内部变量
+####  \set[名称[值数]] 设定内部变量，若无参数则列出全部变量
+####  \unset 名称    清空(删除)内部变量
+	  
+####  大对象
+####  \lo_export LOBOID 文件
+####  \lo_import 文件[注释]
+####  \lo_list
+####  \lo_unlink LOBOID   大对象运算
 
