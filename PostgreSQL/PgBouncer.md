@@ -1,1 +1,1 @@
-# Lightweight connection pooler for PostgreSQL
+**PgBouncer is a lightweight connection pooler for PostgreSQL.**
