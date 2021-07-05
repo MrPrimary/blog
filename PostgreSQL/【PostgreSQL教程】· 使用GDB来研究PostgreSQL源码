@@ -1,0 +1,148 @@
+1. 前言
+
+2. 配置
+
+2.1 允许断言
+
+2.2 允许调试符号
+
+2.3 自动依赖性跟踪
+
+2.4 完整的执行命令 
+
+3. GDB调试 
+
+3.1 pg_backend_pid()获取PID
+
+3.2 ps -eLf|grep postgres获取PID
+
+
+
+
+1. 前言
+
+
+
+在 【PostgreSQL教程】· 源码编译安装PostgreSQL一文中，详细讲解了通过编译源码的方式来安装PostgreSQL服务的流程和细节。值得注意的是，这样编译出来的版本是不带调试信息符号表的。如下图所示，postmaster可执行文件中当前共有30个段表，但是该段表中不存在与调试信息（与调试信息相关的段均以.debug_开头）相关的符号表。
+
+图片
+
+因此，在postmaster服务出现某些底层内核问题（比如访问非法内存，发送SIGSEGV信号）的时候，是无法进一步地进行定位和分析的。所以本文的主要目的就是讲解如何编译带调试符号信息的postmaster，以及如何通过gdb结合源码来定位问题。有关可执行文件符号表等相关的技术请求阅读 详谈ELF文件格式底层原理（一）。
+
+1. 配置
+
+
+
+在执行configure可执行程序时候，我们附加上与调试信息相关的系列参数。通过执行./configure --help可得知当前该configure可执行程序所能支持的完整选项参数列表。如下图所示：
+
+图片
+
+
+在这里，我们选择 --enable-debug（-g）、-- enable-depend 和 --enable-cassert即可。它们各项所代表的的意义将在下面分别一一介绍。
+
+
+
+2. 1 允许断言
+
+
+
+--enable-cassert参数表示将允许在postmaster服务器中打开断言检查。它将会检查许多不可能的条件和选项。
+
+
+
+2. 2 允许调试符号
+
+
+
+--enable_debug参数选项表示编译带调试信息的postmaster可执行程序。用调试信息去编译所有的程序和库，从而使得可用GDB（程序调试工具）来跟踪postmaster服务中行为异常的逻辑代码和业务。
+
+
+
+2. 3 自动依赖性跟踪
+
+
+
+--enable_depend选项参数表示将打开自动依赖性检测和跟踪，这个参数使用场景较少，所以这里不会太多篇幅来讲解，仅做了解即可。
+
+
+
+2. 4 完整的执行命令
+
+
+
+在对这三个可选参数有了一定了解后，我们来看下完整的configure程序执行的命令方式，如下：
+
+（1） [root@node62128 postgresql-13.2]# ./configure --enable-debug --enable-depend --enable-cassert --prefix=/usr/local/pg132
+
+（2） make -j & make install //当然，你也可以选择其拆开为两个步骤执行，即: (2) make -j; (3) make install
+
+
+3.  GDB调试
+
+ 
+
+在使用GDB调试工具来跟踪postmaster运行情况或是分析源码时候，我们可以有两种方式来获取postmaster进程的PID。
+
+
+
+3. 1  pg_backend_pid()获取PID
+
+
+
+（1） psql程序命令登录postmaster服务，然后使用pg_backend_pid()函数来获取当前会话的服务器进程的PID。如下所示：
+
+postgres=# select pg_backend_pid();
+ pg_backend_pid
+----------------
+          74143
+(1 row)
+
+postgres=#
+
+
+3. 2  ps -eLf|grep postgres获取PID
+
+
+
+（2）通过ps命令来获取postmaster服务的进程PID，如下：
+
+postgres  96785      1  96785  0    1 16:29 ?        00:00:00 /usr/local/pg132/bin/postgres -D /home/soft/lixiaogang5/PostgreSQL/data
+postgres  96790  96785  96790  0    1 16:29 ?        00:00:00 postgres: checkpointer
+postgres  96791  96785  96791  0    1 16:29 ?        00:00:00 postgres: background writer
+postgres  96792  96785  96792  0    1 16:29 ?        00:00:00 postgres: walwriter
+postgres  96793  96785  96793  0    1 16:29 ?        00:00:00 postgres: autovacuum launcher
+postgres  96794  96785  96794  0    1 16:29 ?        00:00:00 postgres: stats collector
+postgres  96795  96785  96795  0    1 16:29 ?        00:00:00 postgres: logical replication launcher
+
+
+在得知了postmaster服务的进程PID之后，便可使用GDB来跟踪进程服务状态信息了。通过 gdb -p PID的方式，来调试postmaster服务。如下所示，在gdb跟踪到该进程之后，使用list命令列出当前位置的postmaster服务源代码，当然，你可以根据自己需要开始对源码进行断点等操作。
+
+
+
+[root@node62128 ~]# gdb -p 96785
+Loaded symbols for /lib64/libnss_files.so.2
+0x00007fb6ff1a9a13 in __select_nocancel () from /lib64/libc.so.6
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-323.el7_9.x86_64
+(gdb) list  //2. 列出当前位置的源码，
+52      static void help(const char *progname);
+53      static void check_root(const char *progname);
+54
+55
+56      /*
+57       * Any Postgres server process begins execution here.
+58       */
+59      int
+60      main(int argc, char *argv[])
+61      {
+(gdb)
+
+
+附：建议在使用gdb来调试postmaster服务的时候，结合该postmaster服务所对应的源码版本进行分析，效果更佳。
+
+除了使用 gdb -p PID的方式外，你还可以使用以下步骤来进行调试：
+
+[root@node62128 ~]# gdb //(1)开启gdb调试
+GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-120.el7
+Copyright (C) 2013 Free Software Foundation, Inc.
+
+(gdb) attach 96785  //(2)使gdb与当前指定PID相关联
